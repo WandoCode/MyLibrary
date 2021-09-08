@@ -5,13 +5,15 @@ const sortByForm = document.forms["sortByForm"];
 let sortBy = "title";
 let libraryContainer = document.querySelector(".library-container");
 
-function Book(title, author, nbrPages, read){
-    this.title = title;
-    this.author = author;
-    this.nbrPages = nbrPages;
-    this.read = read;
+class Book{ 
+    constructor(title, author, nbrPages, read){
+        this.title = title;
+        this.author = author;
+        this.nbrPages = nbrPages;
+        this.read = read;
+    }
 
-    this.info = function(){
+    info = function(){
         let formatRead;
         if (this.read == "true"){
             formatRead = "Read";
@@ -21,16 +23,17 @@ function Book(title, author, nbrPages, read){
         }
 
         return `${formatRead}`;
-    };
+    }
 
-    this.toggleRead = function(){
+    toggleRead = function(){
         if (this.read == "true"){
             this.read = "false";
         }
         else{
             this.read = "true";
         }
-    };
+    }
+
 }
 
 /* *** EVENT LISTENERS *** */
