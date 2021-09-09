@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="./js/scrpit.js" defer></script>
+    <title>My Library</title>
+</head>
+<body>
+    <form name="newBookForm">
+        <label for="title">Title</label>
+        <input type="text" name="title">
+
+        <label for="author">Author</label>
+        <input type="text" name="author">
+
+        <label for="nbrPages">Pages</label>
+        <input type="number" name="nbrPages">
+
+        <label for="isRead">Read Y/N</label>
+        <input type="radio" name="isRead">
+
+        <input type="submit">
+    </form>
+
+    <form name="editBookForm">
+        <label for="key"></label>
+        <input type="number" name="key" readonly>
+
+        <label for="title">Title</label>
+        <input type="text" name="title">
+
+        <label for="author">Author</label>
+        <input type="text" name="author">
+
+        <label for="nbrPages">Pages</label>
+        <input type="number" name="nbrPages">
+
+        <input type="submit">
+    </form>
+
+    <form name="sortByForm">
+        <select name="sortBy" id="sortBy">
+            <option value="title+">Title asc.</option>
+            <option value="title-">Title desc.</option>
+            <option value="author+">Author asc.</option>
+            <option value="author-">Author desc.</option>
+            <option value="nbrPages+">Page number asc.</option>
+            <option value="nbrPages-">Page number desc.</option>
+        </select>
+    </form>
+</body>
+</html>

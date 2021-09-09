@@ -20,7 +20,6 @@
 *Constructor(bibli, uniqueKey)*
 
 Bibli: [] qui contient l'ensemble des livres. Si bibli non fourni lors de l'instanciation de l'objet ==> bibli = array vide
-nbrLivre : length de Bibli
 uniqueKey : nombre qui est incrémenté à chaque nouveaux livres ajouté. Sert de référence pour les clés uniques des Book
 
 *methods*   
@@ -35,7 +34,6 @@ AddBook(Book): Ajoute un livre à Bibli et lui attribue une clé unique. renvoi 
 - Attribue uniqueKey au champ key du livre.
 - Incrément uniqueKey
 - push le Book à la fin de la Bibli
-- Incrément nbrLivre
 - return true
 
 getBook(clé unique): renvoi un Book correspondant à la clé unique.
@@ -48,7 +46,6 @@ DelBook(clé unique): Retire un livre à Bibli. Renvoi true si livre effacé, fa
 - Si getBook() == false => renvoyer false
 - indexOf(getBook()) pour avoir l'indice où se trouve le livre dans Bibli
 - splice() Bibli à indice
-- decrementer nbrLivre
 - renvoyer true
 
 EditAuthor(clé unique, nouveau string): attribue le nouveau string au champ 'author' du livre avec la clé unique donnée
@@ -151,11 +148,11 @@ displayLibrary(): Affiche l'ensemble des elements de la librairie un par un dans
     - Append dans le bon ordre ces éléments à TR
 
 upDateBookDisplay(clé unique): met à jour les champ texte du livre donné
-    - récupéré le TR du livre donné avec data-type = clé unique (BookElement)
-    - récupérer le livre avec library.getBook(clé unique) (book)
-        <Partie où je ne suis pas sur de quo faire ni comment mais ca doit être possible>
-    - Récupérer les TD présents
-    - Passer dans chaque TD successivement (sauf les bouton) et mettre à jour les innerText avec book.title, book.author, book.nbrPages et book.strReadStatus()
+- récupéré le TR du livre donné avec data-type = clé unique (BookElement)
+- récupérer le livre avec library.getBook(clé unique) (book)
+    <Partie où je ne suis pas sur de quo faire ni comment mais ca doit être possible>
+- Récupérer les TD présents
+- Passer dans chaque TD successivement (sauf les bouton) et mettre à jour les innerText avec book.title, book.author, book.nbrPages et book.strReadStatus()
 
 inititalize???(): permet de lancer l'outil de sauvegarde ??? (voir code sur le net)
 - Voir code basique sur le net
