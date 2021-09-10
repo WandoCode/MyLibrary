@@ -8,6 +8,15 @@
     <title>My Library</title>
 </head>
 <body>
+
+    <table class="library-container">
+        <thead class="headers">
+
+        </thead>
+        <tbody class="books-container">
+        </tbody>
+    </table>
+
     <form name="newBookForm">
         <label for="title">Title</label>
         <input type="text" name="title">
@@ -48,6 +57,10 @@
             <option value="author-">Author desc.</option>
             <option value="nbrPages+">Page number asc.</option>
             <option value="nbrPages-">Page number desc.</option>
+            <option value="isRead+">Read status asc.</option>
+            <option value="isRead-">Read status desc.</option>
+            <option value="defaul+">Adding order asc.</option>
+            <option value="default-">Adding order desc.</option>
         </select>
     </form>
 </body>

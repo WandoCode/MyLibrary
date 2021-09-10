@@ -29,7 +29,7 @@ isDouble(Book): Vérifie qu'aucun autre livre avec le meme auteur + titre + nbr 
 - si 0 objet trouvé: renvoyer false
 - sinon renvoyer true
 
-AddBook(Book): Ajoute un livre à Bibli et lui attribue une clé unique. renvoi true si ajout fait, false sinon.
+(Book): AddBookAjoute un livre à Bibli et lui attribue une clé unique. renvoi true si ajout fait, false sinon.
 - si isDouble(Book) => Return false
 - Attribue uniqueKey au champ key du livre.
 - Incrément uniqueKey
@@ -109,7 +109,7 @@ strReadStatus: stringify isRead
 
 **Class App**
 
-libraryElement: noeud DOM où sera affiché l'ensemble des livres (table)
+booksElement: noeud DOM où sera affiché l'ensemble des livres (tbody d'une table)
 newBookForm : form DOM qui reccueil les infos entrées par le user pour créer un nouveau livre
 editBookForm: from DOM qui permet de modifier un livre déjà existant
 sortByForm: form DOM qui permet de choisir l'ordre de tri
@@ -123,21 +123,21 @@ sortByForm: form DOM qui permet de choisir l'ordre de tri
 *methods*
 
 initializeDisplay(): ajoute les eventListener nécessaire à l'interface utilisateur
-- ajoute un event listener "onsubmit" à newBookForm (cb = validNewBookForm())
-- ajoute un event listener "onsubmit" à editBookForm (cb = validEditForm())
-- ajoute un event listener "onsubmit" à sortByForm (cd = validSortByForm())
+- ajoute un event listener "onsubmit" à newBookForm (cb = submitNewBookForm())
+- ajoute un event listener "onsubmit" à editBookForm (cb = submitEditBookForm())
+- ajoute un event listener "onsubmit" à sortByForm (cb = submitSortByForm())
 
 sortLibrary(): se base sur sortBy pour renvoyer la Library triée dans l'ordre demandé
 - faire un switch qui permet de choisir parmis les choix de tri de la classe librairy en fct de sortBy
 
-cleanDisplayLibrary(): Efface completement l'affichage de la library dans libraryElement.
-- libraryElement.innerHTML = "";
+cleanDisplayLibrary(): Efface completement l'affichage de la library dans booksElement.
+- Recuperer chaque element .book de booksElement et l'effacer;
 
 displayLibrary(): Affiche l'ensemble des elements de la librairie un par un dans l'ordre de tri choisi
 - sortedLibrary = sortLibrary() == array à afficher
 - pour chaque Book dans Library:
     - Créer un element TR avec un data-type = book.key
-    - Append le TR à libraryElement
+    - Append le TR à booksElement
     - Créer un element TD et y mettre le Book.titre
     - Créer un element TD et y mettre le Book.author
     - Créer un element TD et y mettre le Book.nbrPages
@@ -186,25 +186,25 @@ clickOnRemove(): cb du bouton REMOVE
 - faire Library.DelBook(bookKey)
 - récupérer le TR avec le data-type=bookKey et le supprimer
 
-validEditForm(): Récupère les infos du form editBookForm, les valide et edite les champs de book correspondant
+submitEditBookForm(): Récupère les infos du form editBookForm, les valide et edite les champs de book correspondant
 - Recupère les données dans editBookForm
-- valide les données des différents champs du formulaire
+- valide les données des différents champs du formulaire==> Faire une autre methode pour ca
 - editBookForm["key"].value == clé unique du livre
 - Récupèrer le livre avec getBook(key)
 - modifier les champs du livres avec les methodes Library.edit...
 - mettre à jour le display avec upDateBookDisplay(key)
 
-validNewBookForm():Récupère les infos du form newBookForm, les valide et ajoute un Book correspondant à Library
+submitNewBookForm():Récupère les infos du form newBookForm, les valide et ajoute un Book correspondant à Library
 - Recupère les données dans newBookForm
-- valide les données des différents champs du formulaire
+- valide les données des différents champs du formulaire ==> Faire une autre methode pour ca
 - new Book(données)
 - AddBook(book)
 - cleanDisplayLibrary()
 - displayLibrary()
 
-validSortByForm() : récupère les datas de sortByForm, les valide et met à jour l'affichage de library en fct du tri demandé
+submitSortByForm() : récupère les datas de sortByForm, les valide et met à jour l'affichage de library en fct du tri demandé
 - Recupère les données dans le formulaire
-- valide les données. Attirbuer la valeur à App.sortBy
+- valide les données. Attirbuer la valeur à App.sortBy ==> Faire une autre methode pour ca(validation)
 - sortLibrary()
 - cleanDisplayLibrary()
 - displayLibrary()
