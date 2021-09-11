@@ -147,42 +147,23 @@ displayLibrary(): Affiche l'ensemble des elements de la librairie un par un dans
     - Créer un element TD et y mettre un btn REMOVE avec un data-type=Book.key et un 'onclick' qui renvoi vers clickOnRemove()
     - Append dans le bon ordre ces éléments à TR
 
-upDateBookDisplay(clé unique): met à jour les champ texte du livre donné
-- récupéré le TR du livre donné avec data-type = clé unique (BookElement)
-- récupérer le livre avec library.getBook(clé unique) (book)
-    <Partie où je ne suis pas sur de quo faire ni comment mais ca doit être possible>
-- Récupérer les TD présents
-- Passer dans chaque TD successivement (sauf les bouton) et mettre à jour les innerText avec book.title, book.author, book.nbrPages et book.strReadStatus()
+upDateBookDisplay(clé unique): met à jour l'affichage des champ texte du livre donné
+- récupéré le TR du livre donné avec data-type = clé unique (bookDisplay)
+- Récupérer le livre avec getBook(bookKey)
+- Récupérer les TD title, author, nbrPage et isRead
+- y placer respectivement le book title, author, nbrPage et isRead
 
-inititalize???(): permet de lancer l'outil de sauvegarde ??? (voir code sur le net)
-- Voir code basique sur le net
 
-loadLibrary(): charge les données de l'array Library apd de ???
-- chercher ???.Library 
-- Si existe: JSON.parse() pour récupèrer une array (loadedArray)
-- Si n'existe pas: utiliser loadedArray =[]
-- chercher ???.key
-- Si existe: JSON.parse() pour récupèrer un nombre (loadedKey)
-- Si n'existe pas: utiliser loadedKey = 0
-- créer un nouvel objet Library avec loadedArray et loadedKey (= myLibrary)
-
-saveLibrary(): sauve la librarie
-- ???.Library = JSON.stringify(myLibrary)
-- ???.key = JSON.stringify(myLibrary.uniqueKey)
-
-clickOnEdit(): cb du bouton EDIT
-- Récupérer le data-type du bouton (bookKey) avec getAttribute
-- editBookForm.sytle.display = "flex"
+clickOnEdit(bookKey): cb du bouton EDIT
+- .editBookForm.sytle.display = "flex"
 - Récupérer le livre (getBook(bookKey))
 - remplir les champ avec les données du livre (title, author, nbrPages et book.key(ne pas l'afficher à l'ecran))
 
-clickOnChangeRead(): cb du bouton CHANGEREADSTATUS
-- Récupérer le data-type du bouton (bookKey) avec getAttribute
+clickOnChangeRead(bookKey): cb du bouton CHANGEREADSTATUS
 - faire Library.EditReadStatus(bookKey)
 - faire upDateBookDisplay(bookKey)
 
-clickOnRemove(): cb du bouton REMOVE
-- Récupérer le data-type du bouton (bookKey) avec getAttribute
+clickOnRemove(bookKey): cb du bouton REMOVE
 - faire Library.DelBook(bookKey)
 - récupérer le TR avec le data-type=bookKey et le supprimer
 
@@ -208,3 +189,19 @@ submitSortByForm() : récupère les datas de sortByForm, les valide et met à jo
 - sortLibrary()
 - cleanDisplayLibrary()
 - displayLibrary()
+
+inititalize???(): permet de lancer l'outil de sauvegarde ??? (voir code sur le net)
+- Voir code basique sur le net
+
+loadLibrary(): charge les données de l'array Library apd de ???
+- chercher ???.Library 
+- Si existe: JSON.parse() pour récupèrer une array (loadedArray)
+- Si n'existe pas: utiliser loadedArray =[]
+- chercher ???.key
+- Si existe: JSON.parse() pour récupèrer un nombre (loadedKey)
+- Si n'existe pas: utiliser loadedKey = 0
+- créer un nouvel objet Library avec loadedArray et loadedKey (= myLibrary)
+
+saveLibrary(): sauve la librarie
+- ???.Library = JSON.stringify(myLibrary)
+- ???.key = JSON.stringify(myLibrary.uniqueKey)

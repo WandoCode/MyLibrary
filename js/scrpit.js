@@ -44,10 +44,7 @@ else{
     console.log("Nothing deleted");
 }
 
-bibli.editAuthor(0, "Max");
-bibli.editTitle(0, "La petite sirène");
-bibli.editNbrPages(0, 700);
-bibli.editReadStatus(0);
+
 
 console.log(bibli);
 
@@ -56,6 +53,14 @@ console.log("Sort by pages");
 console.log(bibli);
 
 let app = new App(bibli);
+app.initializeDisplay();
 app.displayLibrary();
 
+
+bibli.editAuthor(0, "Max");
+bibli.editTitle(0, "La petite sirène");
+bibli.editNbrPages(0, 700);
+bibli.editReadStatus(0);
+
+app.upDateBookDisplay(0);
 

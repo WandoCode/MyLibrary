@@ -11,10 +11,13 @@ class App {
     }
 
     initializeDisplay() {
-        /* Add eventListener to HTML element */
-        newBookForm.onsubmit = () => submitNewBookForm();
-        editBookForm.onsubmit = () => submitEditBookForm();
-        sortByForm.onsubmit = () => submitSortByForm();
+        /* Add eventListener to HTML element and display the needed element*/
+        newBookForm.onsubmit = e => this.submitNewBookForm(e);
+        editBookForm.onsubmit = e => this.submitEditBookForm(e);
+        sortByForm.onsubmit = e => this.ubmitSortByForm(e);
+        document.querySelector(".editBookForm").style.display = "none";
+        //document.querySelector(".newBookForm").style.display = "none";
+
     }
 
     sortLibrary() {
@@ -99,9 +102,13 @@ class App {
             trElement.appendChild(readStatusElement);
 
             titleElement.innerText = book.title;
+            titleElement.classList.add("TDtitle");
             authorElement.innerText = book.author;
+            authorElement.classList.add("TDauthor");
             nbrPagesElement.innerText = book.nbrPages;
+            nbrPagesElement.classList.add("TDnbrPages");
             readStatusElement.innerText = book.strReadStatus();
+            readStatusElement.classList.add("TDisRead");
             
             /* Add edit, toogle read status et remove btn at the book*/
             const editBtnElement = document.createElement("TD");
@@ -113,20 +120,147 @@ class App {
 
             const btnEdit = document.createElement("BUTTON");
             btnEdit.innerText = "Edit";
+            btnEdit.setAttribute("data-type", book.key);
             const btnRemove = document.createElement("BUTTON");
             btnRemove.innerText = "Remove";
+            btnRemove.setAttribute("data-type", book.key);
             const btnRead = document.createElement("BUTTON");
             btnRead.innerText = "Read";
+            btnRemove.setAttribute("data-type", book.key);
 
             editBtnElement.appendChild(btnEdit);
             removeBtnElement.appendChild(btnRemove);
             toogleReadBtnElement.appendChild(btnRead);
 
-
-
-
+            /* Add event listeners for the buttons */
+            btnEdit.onclick = () => this.clickOnEdit(book.key);
+            btnRemove.onclick = () => this.clickOnRemove(book.key);
+            btnRead.onclick = () => this.clickOnChangeRead(book.key);
         }
     }
+
+    upDateBookDisplay(bookKey) {
+        /* Update display of the given book */
+        const bookDisplayArray = document.querySelectorAll(".book");
+
+        /* Find the node where the TR for the book is in the table */
+        let bookElement = "";
+        for (let i = 0; i < bookDisplayArray.length; i++) {
+            const bookDisplay = bookDisplayArray[i];
+            if (+(bookDisplay.getAttribute("data-type")) == bookKey) {
+                bookElement = bookDisplay;
+                break;
+            }
+        }
+        
+        /* Get the current info for the book */
+        const book = this.myLibrary.getBook(bookKey);
+        
+        /* Update TD element for title, author, nbrPage et isRead */
+        const titleTd = bookElement.querySelector(".TDtitle");
+        titleTd.innerText = book.title;
+        const authorTd = bookElement.querySelector(".TDauthor");
+        authorTd.innerText = book.author;
+        const nbrPagesTd = bookElement.querySelector(".TDnbrPages");
+        nbrPagesTd.innerText = book.nbrPages;
+        const isReadTd = bookElement.querySelector(".TDisRead");
+        isReadTd.innerText = book.strReadStatus();  
+    }
+
+    clickOnEdit(bookKey) {
+        /* Cb function. Display the edit form for a given book */
+        document.querySelector(".editBookForm").style.display = "flex";
+
+        /* Complete form field with book data */
+        const book = this.myLibrary.getBook(bookKey);
+        editBookForm["author"].value = book.author;
+        editBookForm["title"].value = book.title;
+        editBookForm["nbrPages"].value = book.nbrPages;
+        editBookForm["key"].value = book.key;
+
+    }
+
+    clickOnChangeRead(bookKey) {
+        /* Cb function. Toggle the read value for a given book */
+        this.myLibrary.editReadStatus(bookKey);
+        this.upDateBookDisplay(bookKey);
+    }
+
+    clickOnRemove(bookKey){
+        /* Cb function. Delete the display for a given book */
+        this.myLibrary.delBook(bookKey);
+
+        const bookDisplayArray = document.querySelectorAll(".book");
+        /* Find the node where the TR for the book is in the table and remove it*/
+        for (let i = 0; i < bookDisplayArray.length; i++) {
+            let bookDisplay = bookDisplayArray[i];
+            if (+(bookDisplay.getAttribute("data-type")) == bookKey) {
+                bookDisplay.remove();
+                break;
+            }
+        }
+    }  
+    
+    isValidTextInput(text) {
+        /* Valide text input data value for a fomulaire. Return true if correct, false if not */
+
+        if (text.length > 50) return false;
+        if (text < 1) return false;
+
+        return true;
+    }
+
+    isValidNbrInput(nbr){
+        /* Valide nbr input data value for a fomulaire. Return true if correct, false if not */
+
+        if (parseInt(nbr) == NaN) return false;
+        if (parseInt(nbr) > 5000) return false;
+        if (parseInt(nbr) < 2) return false;
+
+        return true;
+    }
+
+    isValidReadStatus(readStatus) {
+        /* Valide nbr input read status value for a fomulaire. Return true if correct, false if not */
+
+        if (readStatus != "true" || readStatus != "false") return false;
+        return true;
+    }
+
+    submitEditBookForm(e) {
+        /* Process datas send with EditBookForm form */
+
+        e.preventDefault();
+
+        /* Extract datas */
+        let newAuthor = editBookForm["author"].value;
+        let newTitle = editBookForm["title"].value;
+        let newNbrPages = editBookForm["nbrPages"].value;
+        let bookKey = editBookForm["key"].value;
+
+        /* Valid datas */
+        if (!this.isValidNbrInput(newNbrPages) || !this.isValidTextInput(newTitle) 
+            || !this.isValidTextInput(newAuthor) || !this.isValidNbrInput(this.bookKey)) {
+            alert("Invalid datas submited");
+            return;
+        }
+        bookKey = parseInt(bookKey);
+        newNbrPages = parseInt(newNbrPages);
+
+        /* Edit datas in book object */
+        const book = this.myLibrary.getBook(bookKey);
+        book.author = newAuthor;
+        book.title = newTitle;
+        book.nbrPages = newNbrPages;
+
+        /* Update book display */
+        this.upDateBookDisplay(bookKey);
+
+        /* Hide the edit form */
+        document.querySelector(".editBookForm").style.display = "none";
+    }
+
+
 }
 
 
