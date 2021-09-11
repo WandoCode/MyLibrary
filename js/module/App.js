@@ -1,4 +1,5 @@
 import { Book } from "./Book.js"
+import { Library } from "./Library.js";
 
 class App {
 
@@ -9,7 +10,7 @@ class App {
     sortByForm = document.forms["sortByForm"];
 
     constructor(library){
-        this.myLibrary = library; 
+        this.myLibrary = (library == undefined) ? new Library() : library;
         this.sortBy = "default+";
     }
 
@@ -23,6 +24,7 @@ class App {
         document.querySelector(".editBookForm").style.display = "none";
         document.querySelector(".newBookForm").style.display = "none";
 
+        this.loadLibrary();
     }
 
     sortLibrary() {
@@ -235,7 +237,6 @@ class App {
     isValidReadStatus(readStatus) {
         /* Valide nbr input read status value for a fomulaire. Return true if correct, false if not */
 
-        console.log(readStatus)
         if (readStatus != "true" && readStatus != "false") return false;
         return true;
     }
@@ -295,6 +296,8 @@ class App {
         /* Create a new Book object from datas*/
         const book = new Book(newTitle, newAuthor, newNbrPages, newIsRead);
         this.myLibrary.addBook(book);
+        this.saveLibrary();
+
         this.cleanDisplayLibrary();
         this.displayLibrary();
 
@@ -329,6 +332,70 @@ class App {
         else {
             document.querySelector(".newBookForm").style.display = "none";
         }
+    }
+
+    inititalizeLocalStorage(){
+        /* Set up the localStorage component. Code from
+         https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API */
+
+        var storage;
+        try {
+            storage = window['localStorage'];
+            var x = '__storage_test__';
+            storage.setItem(x, x);
+            storage.removeItem(x);
+            return true;
+        }
+        catch(e) {
+            return e instanceof DOMException && (
+                // everything except Firefox
+                e.code === 22 ||
+                // Firefox
+                e.code === 1014 ||
+                // test name field too, because code might not be present
+                // everything except Firefox
+                e.name === 'QuotaExceededError' ||
+                // Firefox
+                e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+                // acknowledge QuotaExceededError only if there's something already stored
+                (storage && storage.length !== 0);
+        }
+    }
+
+    saveLibrary() {
+        console.log(this.inititalizeLocalStorage())
+        if (this.inititalizeLocalStorage()){
+            localStorage.setItem("library", JSON.stringify(this.myLibrary.library));
+        }
+        else {
+            console.log("Save failed");
+        }
+    }
+
+    loadLibrary() {
+        if (this.inititalizeLocalStorage()){
+            if (localStorage.getItem("library") == undefined) {
+                this.myLibrary.library = [];
+            }
+            else {
+                this.myLibrary.library = JSON.parse(localStorage.getItem("library"));
+
+                /* Wrote again Book method deletet by stringify */
+                for (const i in this.myLibrary.library) {
+                    const book = this.myLibrary.library[i];
+                    book.strReadStatus = function (){
+                        return this.isRead == "true" ? "Read" : "Not read";
+                    }
+                }
+            }
+        }
+        else {
+            console.log("load failed");
+        }
+    }
+
+    clearMemory() {
+        localStorage.setItem("library", JSON.stringify([]));
     }
 }
 
