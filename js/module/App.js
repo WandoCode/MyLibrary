@@ -1,6 +1,9 @@
+import { Book } from "./Book.js"
+
 class App {
 
     booksElement = document.querySelector(".books-container");
+    addBookbtn = document.querySelector(".new-book-btn");
     newBookForm = document.forms["newBookForm"];
     editBookForm = document.forms["editBookForm"];
     sortByForm = document.forms["sortByForm"];
@@ -14,9 +17,11 @@ class App {
         /* Add eventListener to HTML element and display the needed element*/
         newBookForm.onsubmit = e => this.submitNewBookForm(e);
         editBookForm.onsubmit = e => this.submitEditBookForm(e);
-        sortByForm.onsubmit = e => this.ubmitSortByForm(e);
+        sortByForm.onsubmit = e => this.submitSortByForm(e);
+        this.addBookbtn.onclick = () => this.toggleNewBookForm();
+
         document.querySelector(".editBookForm").style.display = "none";
-        //document.querySelector(".newBookForm").style.display = "none";
+        document.querySelector(".newBookForm").style.display = "none";
 
     }
 
@@ -55,11 +60,11 @@ class App {
                 this.myLibrary.sortByReadStatus(false);
                 break;
 
-            case "defaul+":
+            case "default+":
                 this.myLibrary.sortByKeys(true);                
                 break;
 
-            case "defaul-":
+            case "default-":
                 this.myLibrary.sortByKeys(false);                
                 break;
 
@@ -196,6 +201,13 @@ class App {
             let bookDisplay = bookDisplayArray[i];
             if (+(bookDisplay.getAttribute("data-type")) == bookKey) {
                 bookDisplay.remove();
+
+                /*Clean edit form*/
+                editBookForm["author"].value = "";
+                editBookForm["title"].value = "";
+                editBookForm["nbrPages"].value = "";
+                editBookForm["key"].value = "";
+
                 break;
             }
         }
@@ -223,7 +235,8 @@ class App {
     isValidReadStatus(readStatus) {
         /* Valide nbr input read status value for a fomulaire. Return true if correct, false if not */
 
-        if (readStatus != "true" || readStatus != "false") return false;
+        console.log(readStatus)
+        if (readStatus != "true" && readStatus != "false") return false;
         return true;
     }
 
@@ -240,7 +253,7 @@ class App {
 
         /* Valid datas */
         if (!this.isValidNbrInput(newNbrPages) || !this.isValidTextInput(newTitle) 
-            || !this.isValidTextInput(newAuthor) || !this.isValidNbrInput(this.bookKey)) {
+            || !this.isValidTextInput(newAuthor) || !this.isValidNbrInput(bookKey)) {
             alert("Invalid datas submited");
             return;
         }
@@ -260,8 +273,66 @@ class App {
         document.querySelector(".editBookForm").style.display = "none";
     }
 
+    submitNewBookForm(e) {
+        /* Process datas send with EditBookForm form */
 
+        e.preventDefault();
+
+        /* Extract datas */
+        let newAuthor = newBookForm["author"].value;
+        let newTitle = newBookForm["title"].value;
+        let newNbrPages = newBookForm["nbrPages"].value;
+        let newIsRead = newBookForm["isRead"].value;
+
+        /* Valid datas */
+        if (!this.isValidNbrInput(newNbrPages) || !this.isValidTextInput(newTitle) 
+            || !this.isValidTextInput(newAuthor) || !this.isValidReadStatus(newIsRead)) {
+            alert("Invalid datas submited");
+            return;
+        }
+        newNbrPages = parseInt(newNbrPages);
+
+        /* Create a new Book object from datas*/
+        const book = new Book(newTitle, newAuthor, newNbrPages, newIsRead);
+        this.myLibrary.addBook(book);
+        this.cleanDisplayLibrary();
+        this.displayLibrary();
+
+        /* Clean form */
+        newBookForm["author"].value = "";
+        newBookForm["title"].value = "";
+        newBookForm["nbrPages"].value = "";
+        newBookForm["isRead"].value = "true";
+    }
+
+    submitSortByForm(e) {
+        /* Process datas send with SortByForm form */
+
+        e.preventDefault();
+
+        /* Extract datas */
+        this.sortBy = sortByForm["sortBy"].value;
+
+        /* Sort library */
+        this.sortLibrary();
+
+        /* Update Display */
+        this.cleanDisplayLibrary();
+        this.displayLibrary();
+    }
+
+    toggleNewBookForm() {
+        /* Show or hide the newBookForm */
+        if (document.querySelector(".newBookForm").style.display == "none") {
+            document.querySelector(".newBookForm").style.display = "flex";
+        }
+        else {
+            document.querySelector(".newBookForm").style.display = "none";
+        }
+    }
 }
+
+
 
 
 export { App };
