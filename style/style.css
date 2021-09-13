@@ -1,8 +1,8 @@
 
 
 body {
-    background-color: rgb(214, 183, 135);
-    height: 220vh;
+    background-color: rgb(233, 233, 233);
+    min-height: 100vh;
 }
 .w-100{
     width: 100%;
@@ -12,19 +12,88 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+.centered{
+    justify-content: center;
+    align-items: center;
+}
 .fixed-col{
     position: fixed;
     top: 0px;
     left: 0;
-    background-color: blueviolet;
     width: 370px;
 }
 
 .main-library{
     margin-left: 380px;
+    margin-top: 20px;
+    margin-right: 20px;
 }
+
 
 td button{
     width: 100%;
     border: none;
+}
+
+.w-25{
+    width: 25%;
+}
+
+.font-size-l{
+    font-size: large;
+    font-weight: bolder;
+}
+
+.padding-form{
+    padding: 20px 10px;
+}
+
+.newBookForm{
+    transition: display 2s;
+}
+
+.edit-form-gohst{
+    height: 60px;
+}
+
+.hide{
+    display: none;
+}
+
+.w-10{
+    width: 8%;
+}
+
+.padding-not-bot{
+    padding: 20px 10px 0px 10px;
+}
+
+.margin-side{
+    margin: 0 5px;
+}
+
+.margin-bot{
+    margin-bottom: 30px;
+}
+
+footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgb(33,37,41);
+    color:rgb(73, 73, 73)
+}
+
+.editBookForm{
+    background-color: rgb(64, 66, 68);
+    padding: 10px;
+
+}
+.fixed-tp{
+    position: fixed;
+    top: 11px;
+    left: 380px;
+    width: 79%;
 }

@@ -175,7 +175,15 @@ class App {
     }
 
     clickOnEdit(bookKey) {
-        /* Cb function. Display the edit form for a given book */
+        /* Cb function. Display the edit form for a given book or remove the display of editform*/
+
+        /* if edit form already displayed ==> hide it */
+        if (document.querySelector(".editBookForm").style.display == "flex"){
+            document.querySelector(".editBookForm").style.display = "none";
+            return;
+        }
+
+        /* Display the form */
         document.querySelector(".editBookForm").style.display = "flex";
 
         /* Complete form field with book data */
@@ -224,11 +232,18 @@ class App {
         return true;
     }
 
+    isValidKey(key) {
+        if (parseInt(key) == NaN) return false;
+        if (parseInt(key) < 0) return false;
+
+        return true;
+    }
+
     isValidNbrInput(nbr){
         /* Valide nbr input data value for a fomulaire. Return true if correct, false if not */
 
         if (parseInt(nbr) == NaN) return false;
-        if (parseInt(nbr) > 5000) return false;
+        if (parseInt(nbr) > 10000) return false;
         if (parseInt(nbr) < 2) return false;
 
         return true;
@@ -254,7 +269,7 @@ class App {
 
         /* Valid datas */
         if (!this.isValidNbrInput(newNbrPages) || !this.isValidTextInput(newTitle) 
-            || !this.isValidTextInput(newAuthor) || !this.isValidNbrInput(bookKey)) {
+            || !this.isValidTextInput(newAuthor) || !this.isValidKey(bookKey)) {
             alert("Invalid datas submited");
             return;
         }
