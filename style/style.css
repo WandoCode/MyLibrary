@@ -1,0 +1,30 @@
+
+
+body {
+    background-color: rgb(214, 183, 135);
+    height: 220vh;
+}
+.w-100{
+    width: 100%;
+}
+
+.fx-c{
+    display: flex;
+    flex-direction: column;
+}
+.fixed-col{
+    position: fixed;
+    top: 0px;
+    left: 0;
+    background-color: blueviolet;
+    width: 370px;
+}
+
+.main-library{
+    margin-left: 380px;
+}
+
+td button{
+    width: 100%;
+    border: none;
+}

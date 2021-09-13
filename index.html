@@ -5,74 +5,87 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module" src="./js/scrpit.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style/style.css">
+    
     <title>My Library</title>
 </head>
-<body>
 
-    <table class="library-container">
-        <thead class="headers">
-            <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Pages</th>
-                <th>Read</th>
-            </tr>
-        </thead>
-        <tbody class="books-container">
-        </tbody>
-    </table>
-    <div class="new-book-container">
-        <button class='new-book-btn'>Add a new book</button>
+<body class="w-100">
+    <div class="fixed-col fx-c">
+        <form class="sortByForm fx-c" name="sortByForm">
+            <select name="sortBy" id="sortBy">
+                <option value="title+">Title asc.</option>
+                <option value="title-">Title desc.</option>
+                <option value="author+">Author asc.</option>
+                <option value="author-">Author desc.</option>
+                <option value="nbrPages+">Page number asc.</option>
+                <option value="nbrPages-">Page number desc.</option>
+                <option value="isRead+">Read status asc.</option>
+                <option value="isRead-">Read status desc.</option>
+                <option value="default+">Adding order asc.</option>
+                <option value="default-">Adding order desc.</option>
+            </select>
+            <input type="submit">
+        </form>
+
+        <div class="new-book-container fx-c">
+            <button class='new-book-btn'>Add a new book</button>
+        </div>
+
+        <form class="newBookForm fx-c" name="newBookForm">
+            <label class="form-label" for="title">Title</label>
+            <input class="form-control" id="title" type="text" name="title">
+
+            <label class="form-label" for="author">Author</label>
+            <input class="form-control" type="text" name="author">
+
+            <label class="form-label" for="nbrPages">Pages</label>
+            <input class="form-control" type="number" name="nbrPages">
+
+            <label class="form-label" for="read">Read</label>
+            <input class="form-control" type="radio" id="read" name="isRead" value="true">
+            <label class="form-label" for="not-read">Not read</label>
+            <input class="form-control" type="radio" id="not-read" name="isRead" value="false">
+
+            <input class="btn btn-primary" type="submit">
+        </form>
+
     </div>
-    
-    <form class="newBookForm" name="newBookForm">
-        <label for="title">Title</label>
-        <input type="text" name="title">
+    <div class="main-library">
+        <form class="editBookForm" name="editBookForm">
 
-        <label for="author">Author</label>
-        <input type="text" name="author">
+            <label for="key">key</label>
+            <input type="number" name="key" readonly>
 
-        <label for="nbrPages">Pages</label>
-        <input type="number" name="nbrPages">
+            <label for="title">Title</label>
+            <input type="text" name="title">
 
-        <label for="read">Read</label>
-        <input type="radio" id="read" name="isRead" value="true">
-        <label for="not-read">Not read</label>
-        <input type="radio" id="not-read" name="isRead" value="false">
-        <input type="submit">
-    </form>
+            <label for="author">Author</label>
+            <input type="text" name="author">
 
-    <form class="editBookForm" name="editBookForm">
-        <label for="key">Title</label>
-        <input type="number" name="key" readonly>
+            <label for="nbrPages">Pages</label>
+            <input type="number" name="nbrPages">
 
-        <label for="title">Title</label>
-        <input type="text" name="title">
+            <input type="submit">
+        </form>
 
-        <label for="author">Author</label>
-        <input type="text" name="author">
+        <table class="w-100 table table-light">
+            <thead class="headers">
+                <tr class="table-dark">
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Pages</th>
+                    <th>Read</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
+                    <th>Change read</th>
 
-        <label for="nbrPages">Pages</label>
-        <input type="number" name="nbrPages">
-
-        <input type="submit">
-    </form>
-
-    <form class="sortByForm" name="sortByForm">
-        <select name="sortBy" id="sortBy">
-            <option value="title+">Title asc.</option>
-            <option value="title-">Title desc.</option>
-            <option value="author+">Author asc.</option>
-            <option value="author-">Author desc.</option>
-            <option value="nbrPages+">Page number asc.</option>
-            <option value="nbrPages-">Page number desc.</option>
-            <option value="isRead+">Read status asc.</option>
-            <option value="isRead-">Read status desc.</option>
-            <option value="default+">Adding order asc.</option>
-            <option value="default-">Adding order desc.</option>
-        </select>
-
-        <input type="submit">
-    </form>
+                </tr>
+            </thead>
+            <tbody class="books-container">
+            </tbody>
+        </table>  
+    </div> 
 </body>
 </html>
